@@ -11,8 +11,8 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -38,7 +38,8 @@ builder.Services.AddSwaggerGen(c =>
                 }
             },
             new string[] { }
-    } });
+        }
+    });
 });
 
 string connS = builder.Configuration.GetConnectionString("defaultconnectionstring")!;
@@ -62,8 +63,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.SignIn.RequireConfirmedEmail = false;
 });
 
-builder.Services.
-    AddAuthentication(options =>
+builder.Services
+    .AddAuthentication(options =>
     {
         options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -99,14 +100,42 @@ builder.Services.AddAuthorization(options =>
                 c.Type == "Role" && c.Value == "OWNER")));
 });
 
-
 builder.Services.RegisterTaskDependencies();
-static async Task SeedIdentityDataAsync(IServiceProvider serviceProvider)
-{
-    var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-    string[] roles = ["OWNER","GUEST"];
+var app = builder.Build();
+
+// Apply migrations and seed data at startup
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Apply any pending migrations
+    var dbContext = services.GetRequiredService<UsersDbContext>();
+    dbContext.Database.Migrate();
+
+    await SeedIdentityDataAsync(userManager, roleManager);
+}
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();
+
+
+// Seed method for Identity roles and user
+static async Task SeedIdentityDataAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+{
+    string[] roles = new string[] { "OWNER", "GUEST" };
 
     foreach (var role in roles)
     {
@@ -135,24 +164,3 @@ static async Task SeedIdentityDataAsync(IServiceProvider serviceProvider)
         }
     }
 }
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
-using var scope = app.Services.CreateScope();
-var services = scope.ServiceProvider;
-await SeedIdentityDataAsync(services);

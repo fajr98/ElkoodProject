@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkoodProject.Task.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkoodProject.Task.Application.Test", "ElkoodProject.Task.Application.Test\ElkoodProject.Task.Application.Test.csproj", "{7B057C54-D302-42D3-8F86-E74CF719D043}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElkoodProject.Test", "ElkoodProject.Test\ElkoodProject.Test.csproj", "{3678A22C-EE3A-4606-82E1-4299406DF043}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{7B057C54-D302-42D3-8F86-E74CF719D043}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B057C54-D302-42D3-8F86-E74CF719D043}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B057C54-D302-42D3-8F86-E74CF719D043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3678A22C-EE3A-4606-82E1-4299406DF043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3678A22C-EE3A-4606-82E1-4299406DF043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3678A22C-EE3A-4606-82E1-4299406DF043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3678A22C-EE3A-4606-82E1-4299406DF043}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{3BF423E5-FAE7-4092-A797-4168A811094E} = {CB796D85-BE3D-4E73-8FA1-5F3E51CE6C35}
 		{99FDBEBF-912E-41C3-8FCB-DE72181B4D83} = {CB796D85-BE3D-4E73-8FA1-5F3E51CE6C35}
 		{7B057C54-D302-42D3-8F86-E74CF719D043} = {CB796D85-BE3D-4E73-8FA1-5F3E51CE6C35}
+		{3678A22C-EE3A-4606-82E1-4299406DF043} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {798738E6-A9E3-4E69-A81D-515A0FCD3F40}
